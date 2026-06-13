@@ -86,53 +86,59 @@ export default function DashboardPage() {
 
       <div className="relative max-w-5xl mx-auto px-6 py-12">
         {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="flex items-start justify-between mb-10"
-        >
-          <div>
-            <div className="flex items-center gap-3 mb-2">
-              <motion.div 
-                className="w-9 h-9 bg-blue-500/10 border border-blue-500/20 rounded-xl flex items-center justify-center"
-                whileHover={{ scale: 1.1, rotate: -10 }}
-                animate={{ rotate: [0, 5, -5, 0] }}
-                transition={{ duration: 3, repeat: Infinity }}
-              >
-                <BarChart3 size={18} className="text-blue-400" />
-              </motion.div>
-              <h1 className="text-3xl font-bold text-white">Dashboard</h1>
-            </div>
-            <p className="text-gray-500 text-sm ml-12">
-              Statistik real-time sistem deteksi senjata
-              {lastUpdated && <span className="ml-2 text-gray-600">· Update: {lastUpdated}</span>}
-            </p>
-          </div>
-          <div className="flex gap-2">
-            <motion.button
-              onClick={() => fetchStats(true)}
-              className="border border-gray-700 hover:border-gray-500 text-gray-400 hover:text-white px-4 py-2 rounded-xl text-sm flex items-center gap-2 transition-all"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <motion.div
-                animate={refreshing ? { rotate: 360 } : { rotate: 0 }}
-                transition={{ duration: 1, repeat: refreshing ? Infinity : 0 }}
-              >
-                <RefreshCw size={14} />
-              </motion.div>
-              Refresh
-            </motion.button>
-            <motion.button
-              onClick={resetStats}
-              className="border border-red-500/20 hover:border-red-500/40 text-red-400 hover:bg-red-500/10 px-4 py-2 rounded-xl text-sm transition-all"
-              whileHover={{ scale: 1.05, boxShadow: "0 0 20px rgba(239, 68, 68, 0.2)" }}
-              whileTap={{ scale: 0.95 }}
-            >
-              Reset
-            </motion.button>
-          </div>
-        </motion.div>
+<motion.div
+  initial={{ opacity: 0, y: 20 }}
+  animate={{ opacity: 1, y: 0 }}
+  className="mb-10"
+>
+  {/* Baris 1: Judul */}
+  <div className="flex items-center gap-3 mb-1">
+    <motion.div 
+      className="w-9 h-9 bg-blue-500/10 border border-blue-500/20 rounded-xl flex items-center justify-center flex-shrink-0"
+      whileHover={{ scale: 1.1, rotate: -10 }}
+      animate={{ rotate: [0, 5, -5, 0] }}
+      transition={{ duration: 3, repeat: Infinity }}
+    >
+      <BarChart3 size={18} className="text-blue-400" />
+    </motion.div>
+    <h1 className="text-3xl font-bold text-white">Dashboard</h1>
+  </div>
+
+  {/* Baris 2: Subtitle */}
+  <p className="text-gray-500 text-sm ml-12 mb-4">
+    Statistik real-time sistem deteksi senjata
+    {lastUpdated && (
+      <span className="ml-2 text-gray-600">· Update: {lastUpdated}</span>
+    )}
+  </p>
+
+  {/* Baris 3: Tombol — full width di mobile, auto di desktop */}
+  <div className="flex gap-2 ml-12 sm:ml-12">
+    <motion.button
+      onClick={() => fetchStats(true)}
+      className="flex-1 sm:flex-none border border-gray-700 hover:border-gray-500 text-gray-400 hover:text-white px-4 py-2 rounded-xl text-sm flex items-center justify-center gap-2 transition-all"
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+    >
+      <motion.div
+        animate={refreshing ? { rotate: 360 } : { rotate: 0 }}
+        transition={{ duration: 1, repeat: refreshing ? Infinity : 0 }}
+      >
+        <RefreshCw size={14} />
+      </motion.div>
+      Refresh
+    </motion.button>
+
+    <motion.button
+      onClick={resetStats}
+      className="flex-1 sm:flex-none border border-red-500/20 hover:border-red-500/40 text-red-400 hover:bg-red-500/10 px-4 py-2 rounded-xl text-sm transition-all"
+      whileHover={{ scale: 1.05, boxShadow: "0 0 20px rgba(239, 68, 68, 0.2)" }}
+      whileTap={{ scale: 0.95 }}
+    >
+      Reset
+    </motion.button>
+  </div>
+</motion.div>
 
         {loading ? (
           <motion.div 

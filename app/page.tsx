@@ -140,28 +140,29 @@ export default function Home() {
   </motion.p>
 
   <motion.div
-    variants={fadeUp}
-    initial="hidden"
-    animate="show"
-    custom={3}
-    className="flex gap-4 justify-center flex-wrap"
+  variants={fadeUp}
+  initial="hidden"
+  animate="show"
+  custom={3}
+  className="flex gap-3 justify-center flex-wrap"
+>
+  <button
+    onClick={() => handleProtectedNav('/predict')}
+    className="btn-primary flex items-center gap-2"
   >
-    <button
-      onClick={() => handleProtectedNav('/predict')}
-      className="btn-primary flex items-center gap-2"
-    >
-      <Camera size={16} />
-      Coba Deteksi
-      <ChevronRight size={16} />
-    </button>
-    <button
-      onClick={() => handleProtectedNav('/dashboard')}
-      className="flex items-center gap-2 border border-gray-700 ..."
-    >
-      <BarChart3 size={16} />
-      Lihat Dashboard
-    </button>
-  </motion.div>
+    <Camera size={16} />
+    Coba Deteksi
+    <ChevronRight size={16} />
+  </button>
+
+  <button
+    onClick={() => handleProtectedNav('/dashboard')}
+    className="flex items-center gap-2 bg-white/5 hover:bg-white/10 border border-gray-700 hover:border-gray-500 text-gray-300 hover:text-white px-6 py-3 rounded-xl text-sm font-medium transition-all duration-300"
+  >
+    <BarChart3 size={16} />
+    Lihat Dashboard
+  </button>
+</motion.div>
 </section>
 
         {/* Animated Shield Visual */}
