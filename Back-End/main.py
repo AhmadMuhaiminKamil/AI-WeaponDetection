@@ -75,6 +75,14 @@ async def predict(file: UploadFile = File(...)):
         detections = []
         img_result = img_bgr.copy()
 
+        # Auto-scale dihitung sekali di luar loop box
+        img_h, img_w = img_result.shape[:2]
+        scale      = max(img_w, img_h) / 800
+        font_scale = max(0.6, 0.7 * scale)
+        thickness  = max(2, int(2 * scale))
+        font_thick = max(2, int(1.5 * scale))
+        pad        = max(8, int(10 * scale))
+
         for result in results:
             boxes = result.boxes
             for box in boxes:
@@ -84,12 +92,36 @@ async def predict(file: UploadFile = File(...)):
                 class_name = CLASS_NAMES.get(class_id, "unknown")
 
                 color = (0, 0, 255) if class_name == "pistol" else (0, 165, 255)
-                cv2.rectangle(img_result, (x1, y1), (x2, y2), color, 2)
 
+                # Bounding box
+                cv2.rectangle(img_result, (x1, y1), (x2, y2), color, thickness)
+
+                # Label
                 label = f"{class_name} {confidence:.0%}"
-                label_size, _ = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.6, 2)
-                cv2.rectangle(img_result, (x1, y1 - label_size[1] - 10), (x1 + label_size[0] + 8, y1), color, -1)
-                cv2.putText(img_result, label, (x1 + 4, y1 - 5), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 255), 2)
+                label_size, _ = cv2.getTextSize(
+                    label, cv2.FONT_HERSHEY_SIMPLEX, font_scale, font_thick
+                )
+                label_w, label_h = label_size
+
+                # Background label box
+                cv2.rectangle(
+                    img_result,
+                    (x1, y1 - label_h - pad * 2),
+                    (x1 + label_w + pad, y1),
+                    color,
+                    -1,
+                )
+
+                # Teks label
+                cv2.putText(
+                    img_result,
+                    label,
+                    (x1 + pad // 2, y1 - pad),
+                    cv2.FONT_HERSHEY_SIMPLEX,
+                    font_scale,
+                    (255, 255, 255),
+                    font_thick,
+                )
 
                 detections.append({
                     "class": class_name,
