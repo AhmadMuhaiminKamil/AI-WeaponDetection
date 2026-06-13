@@ -50,7 +50,7 @@ export default function Home() {
       bg: "bg-red-500/10",
       border: "border-red-500/20",
       title: "Upload & Detect",
-      desc: "Upload gambar dan deteksi senjata secara otomatis menggunakan model YOLOv8.",
+      desc: "Upload gambar dan deteksi senjata secara otomatis menggunakan model YOLOv11.",
     },
     {
       icon: <Zap size={22} />,
@@ -71,7 +71,7 @@ export default function Home() {
   ];
 
   const stats = [
-    { value: "YOLOv8", label: "Model AI" },
+    { value: "YOLOv11", label: "Model AI" },
     { value: "2", label: "Kelas Senjata" },
     { value: "~6ms", label: "Inferensi" },
     { value: "95%+", label: "Akurasi" },
