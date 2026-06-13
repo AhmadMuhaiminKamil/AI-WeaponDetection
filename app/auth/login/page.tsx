@@ -51,7 +51,10 @@ export default function LoginPage() {
       return;
     }
 
-    router.push('/');
+    // Ganti baris router.push('/') dengan:
+const next = new URLSearchParams(window.location.search).get('next') || '/'
+router.push(next)
+router.refresh()
     router.refresh();
   };
 

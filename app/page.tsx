@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
   Shield,
   Camera,
@@ -13,6 +14,7 @@ import {
 import { motion } from "framer-motion";
 import type { Variants } from "framer-motion";
 import Typewriter from "./components/Typewriter";
+import supabase from "@/lib/supabase";
 
 
 const fadeUp: Variants = {
@@ -30,6 +32,17 @@ const stagger = {
 };
 
 export default function Home() {
+  const router = useRouter();  // ← tambah
+
+  // ← tambah: handler yang cek session sebelum redirect
+  const handleProtectedNav = async (href: string) => {
+    const { data: { session } } = await supabase.auth.getSession()
+    if (session) {
+      router.push(href)
+    } else {
+      router.push(`/auth/login?next=${href}`)
+    }
+  }
   const features = [
     {
       icon: <Camera size={22} />,
@@ -83,7 +96,7 @@ export default function Home() {
   >
     <span className="badge mb-8 inline-flex">
       <Activity size={12} />
-      Powered by YOLOv8 Deep Learning
+      Powered by YOLOv11 Deep Learning
     </span>
   </motion.div>
 
@@ -133,21 +146,21 @@ export default function Home() {
     custom={3}
     className="flex gap-4 justify-center flex-wrap"
   >
-    <Link
-      href="/predict"
+    <button
+      onClick={() => handleProtectedNav('/predict')}
       className="btn-primary flex items-center gap-2"
     >
       <Camera size={16} />
       Coba Deteksi
       <ChevronRight size={16} />
-    </Link>
-    <Link
-      href="/dashboard"
-      className="flex items-center gap-2 border border-gray-700 hover:border-gray-500 text-gray-300 hover:text-white px-6 py-3 rounded-xl text-sm font-medium transition-all hover:bg-white/5"
+    </button>
+    <button
+      onClick={() => handleProtectedNav('/dashboard')}
+      className="flex items-center gap-2 border border-gray-700 ..."
     >
       <BarChart3 size={16} />
       Lihat Dashboard
-    </Link>
+    </button>
   </motion.div>
 </section>
 
@@ -283,16 +296,16 @@ export default function Home() {
           </motion.h2>
           <p className="text-gray-400 text-sm max-w-xl mx-auto mb-6 leading-relaxed relative z-10 group-hover:text-gray-300 transition-colors duration-300">
             Dikembangkan sebagai Tugas Besar mata kuliah DIF60202 – Image
-            Processing. Menggunakan YOLOv8 untuk mendeteksi senjata berbahaya
+            Processing. Menggunakan YOLOv11 untuk mendeteksi senjata berbahaya
             guna mendukung keamanan publik.
           </p>
-          <Link
-            href="/predict"
-            className="btn-primary inline-flex items-center gap-2 relative z-10"
-          >
-            <Camera size={16} />
-            Mulai Sekarang
-          </Link>
+          <button
+      onClick={() => handleProtectedNav('/predict')}
+      className="btn-primary inline-flex items-center gap-2 relative z-10"
+    >
+      <Camera size={16} />
+      Mulai Sekarang
+    </button>
         </motion.div>
       </div>
     </div>

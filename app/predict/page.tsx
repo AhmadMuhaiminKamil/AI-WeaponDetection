@@ -119,7 +119,7 @@ export default function PredictPage() {
             </motion.div>
             <h1 className="text-3xl font-bold text-white">Weapon Detection</h1>
           </div>
-          <p className="text-gray-500 text-sm ml-12">Upload gambar untuk mendeteksi senjata menggunakan YOLOv8</p>
+          <p className="text-gray-500 text-sm ml-12">Upload gambar untuk mendeteksi senjata menggunakan YOLOv11</p>
         </motion.div>
 
         <AnimatePresence mode="wait">
@@ -252,7 +252,7 @@ export default function PredictPage() {
                     </div>
                     <div>
                       <p className="text-white text-sm font-medium">Menganalisis gambar...</p>
-                      <p className="text-gray-500 text-xs mt-0.5">Model YOLOv8 sedang memproses</p>
+                      <p className="text-gray-500 text-xs mt-0.5">Model YOLOv11 sedang memproses</p>
                     </div>
                   </motion.div>
                 )}
